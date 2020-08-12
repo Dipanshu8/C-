@@ -56,12 +56,12 @@ OpenCV must be installed in local machine
 	else
 		cout<<"Could not Open Camera"; 
 	return 0; 
-} 
+	} 
 
-void detectAndDraw( Mat& img, CascadeClassifier& cascade, 
+	void detectAndDraw( Mat& img, CascadeClassifier& cascade, 
 					CascadeClassifier& nestedCascade, 
 					double scale) 
-{ 
+	{ 
 	vector<Rect> faces, faces2; 
 	Mat gray, smallImg; 
 
