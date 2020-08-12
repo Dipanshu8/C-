@@ -4,44 +4,37 @@ OpenCV must be installed in local machine
 // CPP program to detects face in a video 
 
 // Include required header files from OpenCV directory 
-
 #include "/usr/local/include/opencv2/objdetect.hpp" 
 #include "/usr/local/include/opencv2/highgui.hpp" 
 #include "/usr/local/include/opencv2/imgproc.hpp" 
 #include <iostream> 
 
-using namespace std; 
-using namespace cv; 
+	using namespace std; 
+	using namespace cv; 
 
-// Function for Face Detection 
-
-void detectAndDraw( Mat& img, CascadeClassifier& cascade, 
+	// Function for Face Detection 
+	void detectAndDraw( Mat& img, CascadeClassifier& cascade, 
 				CascadeClassifier& nestedCascade, double scale ); 
-string cascadeName, nestedCascadeName; 
+	string cascadeName, nestedCascadeName; 
 
-int main( int argc, const char** argv ) 
-{ 
+	int main( int argc, const char** argv ) 
+	{ 
 	// VideoCapture class for playing video for which faces to be detected 
-	
-  VideoCapture capture; 
+	VideoCapture capture; 
 	Mat frame, image; 
 
 	// PreDefined trained XML classifiers with facial features 
-	
-  CascadeClassifier cascade, nestedCascade; 
+	CascadeClassifier cascade, nestedCascade; 
 	double scale=1; 
 
 	// Load classifiers from "opencv/data/haarcascades" directory 
-	
-  nestedCascade.load( "../../haarcascade_eye_tree_eyeglasses.xml" ) ; 
+	nestedCascade.load( "../../haarcascade_eye_tree_eyeglasses.xml" ) ; 
 
 	// Change path before execution 
-	
-  cascade.load( "../../haarcascade_frontalcatface.xml" ) ; 
+	cascade.load( "../../haarcascade_frontalcatface.xml" ) ; 
 
 	// Start Video..1) 0 for WebCam 2) "Path to Video" for a Local Video 
-	
-  capture.open(0); 
+	capture.open(0); 
 	if( capture.isOpened() ) 
 	{ 
 		// Capture frames from video and detect faces 
@@ -56,8 +49,7 @@ int main( int argc, const char** argv )
 			char c = (char)waitKey(10); 
 		
 			// Press q to exit from window 
-			
-      if( c == 27 || c == 'q' || c == 'Q' ) 
+			if( c == 27 || c == 'q' || c == 'Q' ) 
 				break; 
 		} 
 	} 
@@ -73,25 +65,19 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 	vector<Rect> faces, faces2; 
 	Mat gray, smallImg; 
 
-	cvtColor( img, gray, COLOR_BGR2GRAY );
-  
-  // Convert to Gray Scale 
-	
-  double fx = 1 / scale; 
+	cvtColor( img, gray, COLOR_BGR2GRAY ); // Convert to Gray Scale 
+	double fx = 1 / scale; 
 
 	// Resize the Grayscale Image 
-	
-  resize( gray, smallImg, Size(), fx, fx, INTER_LINEAR ); 
+	resize( gray, smallImg, Size(), fx, fx, INTER_LINEAR ); 
 	equalizeHist( smallImg, smallImg ); 
 
 	// Detect faces of different sizes using cascade classifier 
-	
-  cascade.detectMultiScale( smallImg, faces, 1.1, 
+	cascade.detectMultiScale( smallImg, faces, 1.1, 
 							2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) ); 
 
 	// Draw circles around the faces 
-	
-  for ( size_t i = 0; i < faces.size(); i++ ) 
+	for ( size_t i = 0; i < faces.size(); i++ ) 
 	{ 
 		Rect r = faces[i]; 
 		Mat smallImgROI; 
@@ -117,13 +103,11 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 		smallImgROI = smallImg( r ); 
 		
 		// Detection of eyes int the input image 
-		
-    nestedCascade.detectMultiScale( smallImgROI, nestedObjects, 1.1, 2, 
+		nestedCascade.detectMultiScale( smallImgROI, nestedObjects, 1.1, 2, 
 										0|CASCADE_SCALE_IMAGE, Size(30, 30) ); 
 		
 		// Draw circles around eyes 
-		
-    for ( size_t j = 0; j < nestedObjects.size(); j++ ) 
+		for ( size_t j = 0; j < nestedObjects.size(); j++ ) 
 		{ 
 			Rect nr = nestedObjects[j]; 
 			center.x = cvRound((r.x + nr.x + nr.width*0.5)*scale); 
@@ -134,6 +118,6 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 	} 
 
 	// Show Processed Image with detected faces 
-	
-  imshow( "Face Detection", img ); 
+	imshow( "Face Detection", img ); 
 } 
+
