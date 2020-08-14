@@ -1,7 +1,7 @@
 ## Description
 
 This program is a fully end-to-end video face recognition system. 
-This program was writting in C++ 11, using OpenCV 3.1.
+This program was writting in C++ , using OpenCV .
 
 ## Getting Started
 * Download OpenCV [Click here](https://sourceforge.net/projects/opencvlibrary/)
